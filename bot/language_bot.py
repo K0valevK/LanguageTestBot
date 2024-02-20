@@ -1,6 +1,8 @@
 import telebot
 from telebot import types
 
+from bot import bot_consts
+
 
 class LanguageBot:
     def __init__(self):
@@ -27,7 +29,7 @@ class LanguageBot:
         def bot_start(message):
             markup = open_start_menu()
 
-            self._bot.send_message(message.chat.id, 'Добро пожаловать! Какие тесты мы пройдём сегодня?',
+            self._bot.send_message(message.chat.id, bot_consts.START_MESSAGE,
                                    reply_markup=markup)
 
         @self._bot.message_handler(commands=['test'])
@@ -37,15 +39,14 @@ class LanguageBot:
             test_markup.add(leveled_test)
             endless_test = types.KeyboardButton('Бесконечный')
             test_markup.add(endless_test)
-            send = self._bot.send_message(message.chat.id, 'Ну что, начнём тесты! Выберите подходящий тест.',
+            send = self._bot.send_message(message.chat.id, bot_consts.START_TESTING_MESSAGE,
                                           reply_markup=test_markup)
             self._bot.register_next_step_handler(send, select_test_type)
 
         def select_test_type(message):
             if message.text == 'По уровню сложности':
                 cancel_markup = open_cancel_menu()
-                send = self._bot.send_message(message.chat.id, 'Введите уровень сложности. '
-                                                               'Число от 1 до 5.',
+                send = self._bot.send_message(message.chat.id, bot_consts.SELECT_DIFF_LEVEL_MESSAGE,
                                               reply_markup=cancel_markup)
                 self._bot.register_next_step_handler(send, select_difficulty_level)
             else:
@@ -83,8 +84,3 @@ class LanguageBot:
 
     def run(self):
         self._bot.infinity_polling()
-
-
-if __name__ == '__main__':
-    bot = LanguageBot()
-    bot.run()

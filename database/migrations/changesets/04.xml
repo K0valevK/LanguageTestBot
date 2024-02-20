@@ -1,0 +1,29 @@
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+
+    <changeSet author="k.kovalev" id="load-data-task">
+        <loadData tableName="task" file="data/tasks.csv">
+            <column name="id" header="id" type="INTEGER" />
+            <column name="sentence" header="sentence" type="VARCHAR" />
+            <column name="distortion_index" header="distortion_index" type="INTEGER" />
+            <column name="distortion" header="distortion" type="VARCHAR []" />
+            <column name="difficulty" header="difficulty" type="FLOAT" />
+        </loadData>
+    </changeSet>
+
+    <changeSet author="k.kovalev" id="load-data-answer">
+        <loadData tableName="answer" file="data/answers.csv">
+            <column name="id" header="id" type="INTEGER" />
+            <column name="task_id" header="task_id" type="VARCHAR" />
+            <column name="correct" header="correct" type="INTEGER" />
+        </loadData>
+    </changeSet>
+
+</databaseChangeLog>
