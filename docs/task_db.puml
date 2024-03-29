@@ -1,0 +1,23 @@
+@startuml
+
+skinparam linetype ortho
+
+entity task {
+    * id: int <<generated>>
+    --
+    * type: varchar
+    * text: varchar
+    * difficulty: double
+}
+
+entity answer {
+    * id: int <<generated>>
+    --
+    * task_id: int <<FK>>
+    * text: varchar
+    * is_true: bool
+}
+
+task ||-|{ answer
+
+@enduml

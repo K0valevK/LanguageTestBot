@@ -1,0 +1,11 @@
+@startuml
+
+entity user {
+    * id: int <<generated>>
+    --
+    * telegram_id: int
+    * correct_answers: int
+    * tasks_answered: int
+}
+
+@enduml

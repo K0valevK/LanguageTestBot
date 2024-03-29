@@ -16,6 +16,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan, title=settings.project_name, docs_url="/docs")
 app.include_router(endpoints.task_router)
+app.include_router(endpoints.user_router)
 
 
 if __name__ == "__main__":
