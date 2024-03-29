@@ -1,0 +1,100 @@
+import telebot
+from config import settings
+from telebot import types
+
+START_MESSAGE = 'Добро пожаловать! Какие тесты мы пройдём сегодня?'
+START_TESTING_MESSAGE = 'Ну что, начнём тесты! Выберите подходящий тест.'
+SELECT_DIFF_LEVEL_MESSAGE = 'Введите уровень сложности. Число от 1 до 5.'
+DIFF_LEVEL_ERROR = 'Уровень сложности некорректен!'
+PLEASE_TRY_AGAIN = 'Пожалуйста, попробуйте ещё раз.'
+# message.from_user.id
+
+
+class LanguageBot:
+    def __init__(self):
+        self._token = settings.bot_token
+        self._bot = telebot.TeleBot(self._token)
+
+    def open_start_menu():
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+
+        test_button = types.KeyboardButton('/test')
+        statistics_button = types.KeyboardButton('/statistics')
+        help_button = types.KeyboardButton('/help')
+
+        markup.add(test_button)
+        markup.add(statistics_button)
+        markup.add(help_button)
+
+        return markup
+
+    def open_cancel_menu():
+        cancel_markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+
+        cancel_btn = types.KeyboardButton('Отмена')
+        cancel_markup.add(cancel_btn)
+
+        return cancel_markup
+
+    @self._bot.message_handler(commands=['start'])
+    def bot_start(message):
+        markup = open_start_menu()
+
+        self._bot.send_message(message.chat.id, START_MESSAGE,
+                                   reply_markup=markup)
+
+    @self._bot.message_handler(commands=['test'])
+    def bot_initiate_test(message):
+        test_markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+
+        leveled_test = types.KeyboardButton('По уровню сложности')
+        endless_test = types.KeyboardButton('Бесконечный')
+
+        test_markup.add(leveled_test)
+        test_markup.add(endless_test)
+
+        send = self._bot.send_message(message.chat.id, START_TESTING_MESSAGE,
+                                          reply_markup=test_markup)
+        self._bot.register_next_step_handler(send, select_test_type)
+
+    def select_test_type(message):
+        if message.text == 'По уровню сложности':
+            cancel_markup = open_cancel_menu()
+            send = self._bot.send_message(message.chat.id, SELECT_DIFF_LEVEL_MESSAGE,
+                                              reply_markup=cancel_markup)
+            self._bot.register_next_step_handler(send, select_difficulty_level)
+        else:
+            # TODO
+            pass
+
+    def select_difficulty_level(message):
+        if message.text == 'Отмена':
+            self._bot.send_message(message.chat.id, 'Что будем делать теперь?',
+                                       reply_markup=open_start_menu())
+            return
+        try:
+            diff_level = int(message.text)
+            if not (1 <= diff_level <= 5):
+                cancel_markup = open_cancel_menu()
+                send = self._bot.send_message(message.chat.id,
+                                                  'Уровень сложности некорректен! Пожалуйста, попробуйте ещё раз.',
+                                                  reply_markup=cancel_markup)
+                self._bot.register_next_step_handler(send, select_difficulty_level)
+            # TODO
+        except ValueError:
+            cancel_markup = open_cancel_menu()
+            send = self._bot.send_message(message.chat.id,
+                                              'Уровень сложности некорректен! Пожалуйста, попробуйте ещё раз.',
+                                              reply_markup=cancel_markup)
+            self._bot.register_next_step_handler(send, select_difficulty_level)
+
+    @self._bot.message_handler(commands=['statistics'])
+    def bot_show_statistics(message):
+        self._bot.send_message(message.chat.id, 'Bla-bla!')
+
+    @self._bot.message_handler(commands=['help'])
+    def bot_show_help(message):
+        self._bot.send_message(message.chat.id, 'Bla-bla!')
+
+    def run(self):
+        self._bot.infinity_polling()

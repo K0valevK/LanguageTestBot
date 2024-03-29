@@ -16,7 +16,7 @@
                 <constraints nullable="false" primaryKey="true" primaryKeyName="task_pkey"/>
             </column>
 
-            <column name="type" type="task_type">
+            <column name="type" type="VARCHAR">
                 <constraints nullable="false"/>
             </column>
 

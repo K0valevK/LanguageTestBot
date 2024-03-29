@@ -9,7 +9,7 @@
         http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
 
     <changeSet author="k.kovalev" id="create-foreign-keys-answer">
-        <addForeignKeyConstraint baseColumnNames="task_id" baseTableName="correct" constraintName="task_id_fk" referencedColumnNames="id" referencedTableName="task" />
+        <addForeignKeyConstraint baseColumnNames="task_id" baseTableName="answer" constraintName="task_id_fk" referencedColumnNames="id" referencedTableName="task" />
     </changeSet>
 
 </databaseChangeLog>

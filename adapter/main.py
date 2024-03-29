@@ -1,7 +1,7 @@
 from adapter import Adapter
 import configparser
 import json
-import requests
+import http_requests
 import os
 
 
@@ -10,7 +10,7 @@ if __name__ == '__main__':
     config.read(os.path.join(os.path.dirname(__file__), 'configs', 'settings.ini'))
     url = config['Paronym']['url']
 
-    resp = requests.get(url)
+    resp = http_requests.get(url)
     d = [json.loads(jline) for jline in resp.text.splitlines()]
     tasks, answers = Adapter.transform_all(d, 'paronym')
 

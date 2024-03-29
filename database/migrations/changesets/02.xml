@@ -11,7 +11,7 @@
     <changeSet author="k.kovalev" id="create-answer-table">
         <createTable tableName="answer">
             <column autoIncrement="true" name="id" type="INTEGER">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="task_pkey"/>
+                <constraints nullable="false" primaryKey="true" primaryKeyName="answer_pkey"/>
             </column>
 
             <column name="task_id" type="INTEGER">

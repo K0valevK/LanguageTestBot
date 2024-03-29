@@ -1,0 +1,55 @@
+version: "3"
+
+services:
+  postgresql:
+    extends:
+      file: tools/database-dev/docker-compose.yml
+      service: postgresql
+
+  pgadmin:
+    extends:
+      file: tools/database-dev/docker-compose.yml
+      service: pgadmin
+
+  migrations:
+    container_name: "migrations"
+    image: liquibase/liquibase:4.19.0
+    command: --defaultsFile=/app/liquibase.properties update
+    depends_on:
+      postgresql:
+        condition: service_healthy
+    volumes:
+      - ./database/migrations:/app
+    networks:
+      - langbot-network
+
+  database:
+    container_name: "database"
+    build:
+      context: .
+      dockerfile: database/src/Dockerfile
+    depends_on:
+      postgresql:
+        condition: service_healthy
+      migrations:
+        condition: service_completed_successfully
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    networks:
+      - langbot-network
+
+  bot:
+    container_name: "bot"
+    build:
+      context: .
+      dockerfile: bot/src/Dockerfile
+    depends_on:
+      - database
+    restart: unless-stopped
+    networks:
+      - langbot-network
+
+networks:
+  langbot-network:
+    name: "langbot-network"
