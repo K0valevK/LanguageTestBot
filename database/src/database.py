@@ -54,7 +54,7 @@ class DatabaseSessionManager:
 
 
 sessionmanager_task = DatabaseSessionManager(settings.database_task_url, {"echo": settings.echo_sql})
-sessionmanager_stats = DatabaseSessionManager(settings.database_statistic_ur, {"echo": settings.echo_sql})
+sessionmanager_stats = DatabaseSessionManager(settings.database_statistic_url, {"echo": settings.echo_sql})
 
 
 async def get_db_task_session():

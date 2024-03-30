@@ -14,8 +14,12 @@ router = APIRouter(
 
 
 @router.get("", response_model=List[Task])
-async def get_tasks(difficulty_min: float, difficulty_max: float, limit: int, db: AsyncSession = Depends(get_db_session)):
-    db_tasks = await get_tasks_by_difficulty(db, difficulty_min, difficulty_max, limit)
+async def get_tasks(difficulty_min: float,
+                    difficulty_max: float,
+                    offset: int,
+                    limit: int,
+                    db: AsyncSession = Depends(get_db_session)):
+    db_tasks = await get_tasks_by_difficulty(db, difficulty_min, difficulty_max, offset, limit)
     return db_tasks
 
 

@@ -9,4 +9,4 @@ class Task(Base):
     id: Mapped[int] = mapped_column(Integer, autoincrement=True, primary_key=True)
     type: Mapped[str] = mapped_column(String, nullable=False)
     text: Mapped[str] = mapped_column(String)
-    difficulty: Mapped[float] = mapped_column(Double)
+    difficulty: Mapped[float] = mapped_column(Double, index=True)

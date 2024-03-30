@@ -6,12 +6,13 @@ import httpx
 import json
 
 
-async def get_tasks(difficulty_min: float, difficulty_max: float, limit: int) -> List[Task]:
+async def get_tasks(difficulty_min: float, difficulty_max: float, offset: int, limit: int) -> List[Task]:
     async with httpx.AsyncClient() as client:
         resp = await client.get(f"http://{settings.database_host}:{settings.database_port}/task",
                                 headers={"accept": "application/json"},
                                 params={"difficulty_min": difficulty_min,
                                         "difficulty_max": difficulty_max,
+                                        "offset": offset,
                                         "limit": limit})
     return [Task(**i) for i in json.loads(resp.text)]
 

@@ -18,9 +18,13 @@
                 <constraints nullable="false" unique="true"/>
             </column>
 
+            <column name="username" type="VARCHAR" />
+
             <column name="correct_answers" type="INTEGER" />
 
             <column name="tasks_answered" type="INTEGER" />
+
+            <column name="max_unlimited_score" type="INTEGER" />
         </createTable>
     </changeSet>
 

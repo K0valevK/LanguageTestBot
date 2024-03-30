@@ -12,3 +12,7 @@ class Testing(StatesGroup):
 class LeveledTest(StatesGroup):
     test_difficulty = State()
     in_progress = State()
+
+
+class EndlessTest(StatesGroup):
+    in_progress = State()

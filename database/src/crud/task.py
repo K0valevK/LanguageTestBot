@@ -6,8 +6,13 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
-async def get_tasks_by_difficulty(db: AsyncSession, difficulty_min: float, difficulty_max: float, limit: int):
-    result = await db.execute(select(TaskDBModel).where(difficulty_min <= TaskDBModel.difficulty,
+async def get_tasks_by_difficulty(db: AsyncSession,
+                                  difficulty_min: float,
+                                  difficulty_max: float,
+                                  offset: int,
+                                  limit: int):
+    result = await db.execute(select(TaskDBModel).where(TaskDBModel.id > offset,
+                                                        difficulty_min <= TaskDBModel.difficulty,
                                                         TaskDBModel.difficulty <= difficulty_max).limit(limit))
     return result.scalars().all()
 

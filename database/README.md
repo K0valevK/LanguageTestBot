@@ -1,8 +1,10 @@
 # Migrations
 
-`docker run --rm --network="langbot-network" -v "$(pwd)/migrations/statistics_db":/app liquibase/liquibase:4.19.0 --defaultsFile=/app/liquibase.properties update`
+From root
 
-`docker run --rm --network="langbot-network" -v "$(pwd)/migrations/task_db":/app liquibase/liquibase:4.19.0 --defaultsFile=/app/liquibase.properties update`
+`docker run --rm --network="langbot-network" -v "$(pwd)/database/migrations/statistics_db":/app liquibase/liquibase:4.19.0 --defaultsFile=/app/liquibase.properties update`
+
+`docker run --rm --network="langbot-network" -v "$(pwd)/database/migrations/task_db":/app liquibase/liquibase:4.19.0 --defaultsFile=/app/liquibase.properties update`
 
 # Build docker
 

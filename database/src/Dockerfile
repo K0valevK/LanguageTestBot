@@ -8,6 +8,7 @@ WORKDIR /app
 RUN pip install -r requirements.txt
 
 ENV PYTHONPATH=/app
-ENV DATABASE_URL="postgresql+asyncpg://postgres:postgres@fintech-postgresql:5432/database"
+ENV DATABASE_TASK_URL="postgresql+asyncpg://postgres:postgres@postgresql:5432/task"
+ENV DATABASE_STATISTIC_URL="postgresql+asyncpg://postgres:postgres@postgresql:5432/statistic"
 
 ENTRYPOINT ["python3", "src/main.py"]
