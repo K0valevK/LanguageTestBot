@@ -1,10 +1,9 @@
 from apscheduler.schedulers.background import BackgroundScheduler
+from aiokafka import AIOKafkaProducer
 from config import settings
 from glob import glob
 from os import remove
 from logs.logger import new_file, log_names
-
-from aiokafka import AIOKafkaProducer
 
 import asyncio
 

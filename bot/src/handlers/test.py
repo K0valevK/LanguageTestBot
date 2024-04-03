@@ -9,6 +9,7 @@ from task_logic import get_new_tasks, next_task, get_cur_task_id, get_cur_inf_ta
 from states import TestingState, LeveledTestState, EndlessTestState
 from keyboards import test_kb, difficulty_kb, start_kb
 from logs import log, get_current_time, get_test_key
+from utils import safe_request
 
 import text
 import states
@@ -137,10 +138,22 @@ async def finish_test(msg: Message, state: FSMContext):
                      reply_markup=ReplyKeyboardRemove())
     await msg.answer(text.TEST_AFTERSTATE, reply_markup=start_kb)
 
-    await update_user_leveled_test(user_id,
-                                   username,
-                                   tasks_data[user_id]["correct"],
-                                   tasks_data[user_id]["question_num"])
+    '''
+    resp = await update_user_leveled_test(user_id,
+                                          username,
+                                          tasks_data[user_id]["correct"],
+                                          tasks_data[user_id]["question_num"])
+    '''
+    resp = await safe_request(update_user_leveled_test, user_id,
+                              user_id,
+                              username,
+                              tasks_data[user_id]["correct"],
+                              tasks_data[user_id]["question_num"])
+
+    if resp.status_code != 200:
+        log("errors", timestamp=get_current_time(), user_id=msg.from_user.id,
+            meta_info="WhoKnows", reason=resp.status_code, category="database")
+
     await clear_test_data(user_id)
     await state.clear()
 
@@ -155,10 +168,23 @@ async def finish_endless(msg: Message, state: FSMContext):
     await msg.answer(text.ENDLESS_FINISHED.format(endless_tasks_data[user_id]["correct"]),
                      reply_markup=start_kb)
 
-    await update_user_infinite_test(user_id,
-                                    username,
-                                    endless_tasks_data[user_id]["correct"],
-                                    endless_tasks_data[user_id]["question_num"],
-                                    endless_tasks_data[user_id]["correct"])
+    '''
+    resp = await update_user_infinite_test(user_id,
+                                           username,
+                                           endless_tasks_data[user_id]["correct"],
+                                           endless_tasks_data[user_id]["question_num"],
+                                           endless_tasks_data[user_id]["correct"])
+    '''
+    resp = await safe_request(update_user_infinite_test, user_id,
+                              user_id,
+                              username,
+                              endless_tasks_data[user_id]["correct"],
+                              endless_tasks_data[user_id]["question_num"],
+                              endless_tasks_data[user_id]["correct"])
+
+    if resp.status_code != 200:
+        log("errors", timestamp=get_current_time(), user_id=msg.from_user.id,
+            meta_info="WhoKnows", reason=resp.status_code, category="database")
+
     await clear_endless_test_data(user_id)
     await state.clear()

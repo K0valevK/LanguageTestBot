@@ -24,12 +24,20 @@ async def post_user(user: UserCreate, db: AsyncSession = Depends(get_db_session)
 
 @router.get("/{telegram_id}", response_model=User)
 async def get_user(telegram_id: int, db: AsyncSession = Depends(get_db_session)):
-    return await get_user_by_id(db, telegram_id)
+    result = await get_user_by_id(db, telegram_id)
+    if result is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User does not exist")
+
+    return result
 
 
 @router.get("/name/{username}", response_model=User)
 async def get_user_name(username: str, db: AsyncSession = Depends(get_db_session)):
-    return await get_user_by_name(db, username)
+    result = await get_user_by_name(db, username)
+    if result is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User does not exist")
+
+    return result
 
 
 @router.put("", response_model=User)
@@ -42,9 +50,16 @@ async def update_user(user: UserCreate, db: AsyncSession = Depends(get_db_sessio
     return await upd_user(db, user)
 
 
-@router.get("/leaders", response_model=List[List[User]])
-async def get_leaders(db: AsyncSession = Depends(get_db_session)):
-    db_leaders_endless = await lb_unlimited_score(db)
+@router.get("/leaders/tasks", response_model=List[User])
+async def get_leaders_tasks(db: AsyncSession = Depends(get_db_session)):
     db_leaders_most_correct = await lb_correct_ans(db)
 
-    return [db_leaders_endless, db_leaders_most_correct]
+    return db_leaders_most_correct
+
+
+@router.get("/leaders/endless", response_model=List[User])
+async def get_leaders_endless(db: AsyncSession = Depends(get_db_session)):
+    db_leaders_endless = await lb_unlimited_score(db)
+
+    return db_leaders_endless
+

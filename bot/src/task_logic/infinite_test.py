@@ -2,6 +2,7 @@ from aiogram import types
 from aiogram.utils.formatting import as_list
 from database_requests import get_tasks, get_answers
 from typing import Dict, List
+from utils import safe_request
 
 import random
 import text

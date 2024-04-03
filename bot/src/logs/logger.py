@@ -25,8 +25,10 @@ mapped_test_key = {"По уровню сложности": "leveled",
 
 
 # logging.basicConfig(level=logging.INFO, filename=current_file)
-open(LOG_FILE_PATH.format(current_files[log_names["user_journey"]]), 'x')
-open(LOG_FILE_PATH.format(current_files[log_names["errors"]]), 'x')
+f = open(LOG_FILE_PATH.format(current_files[log_names["user_journey"]]), 'w')
+f.close()
+f = open(LOG_FILE_PATH.format(current_files[log_names["errors"]]), 'w')
+f.close()
 
 
 def get_current_time():

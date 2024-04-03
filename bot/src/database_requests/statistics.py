@@ -5,7 +5,6 @@ from schemas import User
 
 import httpx
 
-
 base_url = "http://{host}:{port}/user{path}"
 post_put_headers = {"accept": "application/json", "Content-Type": "application/json"}
 get_headers = {"accept": "application/json"}
@@ -71,8 +70,12 @@ async def update_user_infinite_test(telegram_id: int,
 
 async def get_leaders():
     async with httpx.AsyncClient() as client:
-        resp = await client.get(create_url("/leaders"),
+        resp = await client.get(create_url("/leaders/tasks"),
                                 headers=get_headers)
-    # TODO finish
-    a = json.loads(resp.text)
-    return resp
+        leaders_tasks = [User(**i) for i in json.loads(resp.text)]
+
+        resp = await client.get(create_url("/leaders/endless"),
+                                headers=get_headers)
+        leaders_endless = [User(**i) for i in json.loads(resp.text)]
+
+    return {"endless": leaders_endless, "tasks": leaders_tasks}
