@@ -10,5 +10,7 @@ RUN pip install -r requirements.txt
 ENV PYTHONPATH=/app
 ENV DATABASE_HOST="database"
 ENV DATABASE_PORT=8000
+ENV KAFKA_HOST="kafka"
+ENV KAFKA_PORT=9092
 
 ENTRYPOINT ["python3", "src/main.py"]

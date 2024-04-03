@@ -14,4 +14,4 @@ From root
 
 # Run docker
 
-`docker run -d --network="langbot-network" -p 8000:8000 database`
+`docker run -d --network="langbot-network" -p 8000:8000 --name database database`

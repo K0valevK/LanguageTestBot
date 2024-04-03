@@ -66,3 +66,7 @@ async def clear_test_data(user_id: int):
     user_tasks.pop(user_id)
     user_ans.pop(user_id)
     tasks_data.pop(user_id)
+
+
+def get_cur_task_id(user_id: int):
+    return user_tasks[user_id][tasks_data[user_id]["question_num"]].id

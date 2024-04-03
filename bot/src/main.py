@@ -2,6 +2,7 @@ from aiogram import Bot, Dispatcher
 from aiogram.enums.parse_mode import ParseMode
 from aiogram.fsm.storage.memory import MemoryStorage
 from config import settings
+from logs import scheduler
 
 import asyncio
 import handlers
@@ -21,4 +22,5 @@ async def main():
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
+    scheduler.start()
     asyncio.run(main())
