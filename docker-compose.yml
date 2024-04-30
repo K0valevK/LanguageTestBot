@@ -75,6 +75,11 @@ services:
     networks:
       - langbot-network
 
+  clickhouse:
+    extends:
+      file: tools/clickhouse-dev/docker-compose.yml
+      service: clickhouse
+
   database:
     container_name: "database"
     build:
@@ -103,6 +108,24 @@ services:
         condition: service_started
       init-kafka:
         condition: service_completed_successfully
+    restart: unless-stopped
+    networks:
+      - langbot-network
+
+  logs:
+    container_name: "logs"
+    build:
+      context: .
+      dockerfile: logger_db/src/Dockerfile
+    depends_on:
+      bot:
+        condition: service_started
+      kafka:
+        condition: service_started
+      init-kafka:
+        condition: service_completed_successfully
+      clickhouse:
+        condition: service_started
     restart: unless-stopped
     networks:
       - langbot-network

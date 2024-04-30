@@ -5,45 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d7c0135b-1d8e-440f-89f0-6f099ac2a9ed" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/LanguageTestBot.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/src/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/src/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/src/config.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/src/crud/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/src/crud/answer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/src/crud/task.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/src/database.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/src/endpoints/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/src/endpoints/task.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/src/models/answer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/src/models/task.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/src/schemas/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/src/schemas/answer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/src/schemas/task.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tools/database-dev/configs/create-multiple-db-with-users.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tools/database-dev/configs/pgpass" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tools/database-dev/configs/servers.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tools/database-dev/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/docker-compose.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/changesets/01.xml" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/changesets/01.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/changesets/02.xml" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/changesets/02.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/changesets/03.xml" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/changesets/03.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/changesets/04.xml" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/changesets/04.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/liquibase.properties" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/liquibase.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/models/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/models/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/models/answer_dao.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/models/answer_dto.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/models/task_dao.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/models/task_dto.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/session.py" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/tools/clear_logs.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,30 +39,60 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Python.bot.executor": "Run",
+    "Python.database.executor": "Run",
     "Python.main (1).executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "/Users/kkovalev/LanguageTestBot/database/src"
+    "last_opened_file_path": "/Users/kkovalev/LanguageTestBot/bot/src"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/bot/src" />
+      <recent name="$PROJECT_DIR$/database/migrations/statistics_db" />
       <recent name="$PROJECT_DIR$/database/src" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/bot" />
-      <recent name="$PROJECT_DIR$/database" />
-      <recent name="$PROJECT_DIR$/database/migrations" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/database/migrations/task_db" />
+      <recent name="$PROJECT_DIR$/bot/src" />
       <recent name="$PROJECT_DIR$/database/src" />
       <recent name="$PROJECT_DIR$/database/src/sessions" />
       <recent name="$PROJECT_DIR$/database" />
-      <recent name="$PROJECT_DIR$/database/migrations" />
-      <recent name="$PROJECT_DIR$/bot" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Compound.project">
+    <configuration name="project" type="CompoundRunConfigurationType">
+      <toRun name="bot" type="PythonConfigurationType" />
+      <toRun name="database" type="PythonConfigurationType" />
+      <method v="2" />
+    </configuration>
+    <configuration name="bot" type="PythonConfigurationType" factoryName="Python">
+      <module name="LanguageTestBot" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.11" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/bot" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/bot/src/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="database" type="PythonConfigurationType" factoryName="Python">
       <module name="LanguageTestBot" />
       <option name="ENV_FILES" value="" />
@@ -124,6 +116,11 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Compound.project" />
+      <item itemvalue="Python.database" />
+      <item itemvalue="Python.bot" />
+    </list>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -142,5 +139,16 @@
       <updated>1700914757019</updated>
     </task>
     <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/database/src/crud/user.py</url>
+          <line>46</line>
+          <option name="timeStamp" value="31" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

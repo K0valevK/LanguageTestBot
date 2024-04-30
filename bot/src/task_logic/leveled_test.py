@@ -25,7 +25,7 @@ async def gen_new_test(user_id: int, difficulty: str):
     tasks_data[user_id]["question_num"] = 0
 
     user_tasks[user_id] = await get_tasks(**level_range[difficulty],
-                                          offset=random.randrange(0, 9000),
+                                          offset=random.randrange(0, 90) * 100,
                                           limit=tasks_in_test)
 
     if user_id in user_ans:

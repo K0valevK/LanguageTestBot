@@ -21,7 +21,7 @@ async def get_new_tasks(user_id: int):
 
     user_tasks[user_id] = await get_tasks(difficulty_min=0.0,
                                           difficulty_max=1.0,
-                                          offset=random.randrange(0, 9000),
+                                          offset=random.randrange(0, 90) * 100,
                                           limit=batch_limit)
 
     if user_id in user_ans:
