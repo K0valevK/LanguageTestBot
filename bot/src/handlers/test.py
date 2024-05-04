@@ -26,8 +26,13 @@ async def command_test(msg: Message, state: FSMContext):
     await msg.answer(text.START_TESTING_MESSAGE, reply_markup=test_kb)
 
 
-@router.message(TestingState.test_type, F.text.in_(states.available_test_types))
+@router.message(TestingState.test_type, F.text.in_(states.available_test_types + ["На главную"]))
 async def select_test_type(msg: Message, state: FSMContext):
+    if msg.text.lower() == "на главную":
+        await state.clear()
+        await msg.answer(text.START_MESSAGE, reply_markup=start_kb)
+        return
+
     log("user_journey", timestamp=get_current_time(), user_id=msg.from_user.id,
         event_group="click2button", event_name="test_type", event_data=get_test_key(msg.text))
 
@@ -35,7 +40,7 @@ async def select_test_type(msg: Message, state: FSMContext):
         await state.set_state(LeveledTestState.test_difficulty)
         await msg.answer(text.SELECT_DIFF_LEVEL_MESSAGE, reply_markup=difficulty_kb)
 
-    else:
+    elif msg.text.lower() == "бесконечный":
         await state.set_state(EndlessTestState.in_progress)
         await msg.answer(f"Значит {msg.text} уровень? Что ж поехали!", reply_markup=ReplyKeyboardRemove())
 
@@ -47,8 +52,13 @@ async def select_test_type(msg: Message, state: FSMContext):
         await msg.answer(**content.as_kwargs(), reply_markup=kb)
 
 
-@router.message(LeveledTestState.test_difficulty, F.text.in_(states.available_test_diff))
+@router.message(LeveledTestState.test_difficulty, F.text.in_(states.available_test_diff + ["На главную"]))
 async def select_difficulty(msg: Message, state: FSMContext):
+    if msg.text.lower() == "на главную":
+        await state.clear()
+        await msg.answer(text.START_MESSAGE, reply_markup=start_kb)
+        return
+
     log("user_journey", timestamp=get_current_time(), user_id=msg.from_user.id,
         event_group="click2button", event_name="test_difficulty", event_data=msg.text)
 

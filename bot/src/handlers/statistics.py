@@ -25,8 +25,13 @@ async def command_statistics(msg: Message, state: FSMContext):
     await msg.answer(text.START_STATS_MESSAGE, reply_markup=statistics_kb)
 
 
-@router.message(StatisticsState.statistics_type, F.text.in_(states.available_statistics_types))
+@router.message(StatisticsState.statistics_type, F.text.in_(states.available_statistics_types + ["На главную"]))
 async def select_statistics_type(msg: Message, state: FSMContext):
+    if msg.text.lower() == "на главную":
+        await state.clear()
+        await msg.answer(text.START_MESSAGE, reply_markup=start_kb)
+        return
+
     log("user_journey", timestamp=get_current_time(), user_id=msg.from_user.id,
         event_group="click2button", event_name="statistics_get_type", event_data=get_stats_key(msg.text))
 

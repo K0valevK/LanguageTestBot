@@ -13,10 +13,12 @@ test_kb = types.ReplyKeyboardMarkup(keyboard=[
     [
         types.KeyboardButton(text=i) for i in available_test_types
     ],
+    [types.KeyboardButton(text="На главную")],
 ], resize_keyboard=True, input_field_placeholder="Выберите режим")
 
 difficulty_kb = types.ReplyKeyboardMarkup(keyboard=[
     [
         types.KeyboardButton(text=i) for i in available_test_diff
     ],
+    [types.KeyboardButton(text="На главную")],
 ], resize_keyboard=True, input_field_placeholder="Выберите сложность")
