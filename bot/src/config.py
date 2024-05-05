@@ -3,6 +3,7 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     app_version: str = "1.0"
+    mode: str = "debug"
 
     bot_token: str = "6507913188:AAHx-QFkh87DrHqjcU27RzJnzPKdBdgFgMw"
     database_host: str = "localhost"

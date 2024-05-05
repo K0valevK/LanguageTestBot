@@ -3,7 +3,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.filters import Command, StateFilter
 from aiogram.types import Message, ReplyKeyboardRemove
 from aiogram.utils.formatting import as_list, Bold
-from database_requests import get_user, get_user_name, get_leaders
+from database_requests import get_user, get_user_name, get_leaders, get_stats_by_uid
 from states import StatisticsState
 from keyboards import statistics_kb, start_kb
 from logs import log, get_current_time, get_stats_key
@@ -41,14 +41,25 @@ async def select_statistics_type(msg: Message, state: FSMContext):
         if resp.status_code != 200:
             log("errors", timestamp=get_current_time(), user_id=msg.from_user.id,
                 meta_info="WhoKnows", reason=resp.status_code, category="database")
+            await state.clear()
             await msg.answer(text.ERROR, reply_markup=start_kb)
             return
 
         user = json.loads(resp.text)
 
-        await msg.answer(text.RESULTS.format(user['correct_answers'],
-                                             user['correct_answers'] / user['tasks_answered'],
-                                             user['max_unlimited_score']),
+        resp = await safe_request(get_stats_by_uid, msg.from_user.id, user["id"])
+        if resp.status_code != 200:
+            log("errors", timestamp=get_current_time(), user_id=msg.from_user.id,
+                meta_info="WhoKnows", reason=resp.status_code, category="database")
+            await state.clear()
+            await msg.answer(text.ERROR, reply_markup=start_kb)
+            return
+
+        stats = json.loads(resp.text)
+
+        await msg.answer(text.RESULTS.format(stats['correct_answers'],
+                                             round(stats['correct_answers'] / stats['tasks_answered'], 2) if stats['tasks_answered'] != 0 else 0,
+                                             stats['max_unlimited_score']),
                          reply_markup=start_kb)
     elif msg.text.lower() == "найти по username":
         await state.clear()
@@ -68,8 +79,8 @@ async def select_statistics_type(msg: Message, state: FSMContext):
 
         content = as_list(Bold(text.LB_HEADER_TASKS), *[
             text.LEADERBOARDS.format(place=i + 1,
-                                     leader=users["tasks"][i].username,
-                                     score=users["tasks"][i].tasks_answered) if users["tasks"][
+                                     leader=users["tasks"][i][1].username,
+                                     score=users["tasks"][i][0].tasks_answered) if users["tasks"][
                                                                                     i] is not None else "Пусто" for i in
             range(len(users["tasks"]))
         ], sep="\n")
@@ -78,8 +89,8 @@ async def select_statistics_type(msg: Message, state: FSMContext):
 
         content = as_list(Bold(text.LB_HEADER_ENDLESS), *[
             text.LEADERBOARDS.format(place=i + 1,
-                                     leader=users["endless"][i].username,
-                                     score=users["endless"][i].max_unlimited_score) if users["endless"][
+                                     leader=users["endless"][i][1].username,
+                                     score=users["endless"][i][0].max_unlimited_score) if users["endless"][
                                                                                            i] is not None else "Пусто"
             for i in
             range(len(users["endless"]))
@@ -106,9 +117,18 @@ async def find_by_username(msg: Message, state: FSMContext):
 
     user = json.loads(resp.text)
 
+    resp = await safe_request(get_stats_by_uid, msg.from_user.id, user["id"])
+    if resp.status_code != 200:
+        log("errors", timestamp=get_current_time(), user_id=msg.from_user.id,
+            meta_info="WhoKnows", reason=resp.status_code, category="database")
+        await msg.answer(text.ERROR, reply_markup=start_kb)
+        return
+
+    stats = json.loads(resp.text)
+
     await msg.answer(text.RESULTS_ELSE.format(user['username'],
-                                              user['correct_answers'],
-                                              user['correct_answers'] / user['tasks_answered'],
-                                              user['max_unlimited_score']),
+                                              stats['correct_answers'],
+                                              round(stats['correct_answers'] / stats['tasks_answered'], 2) if stats['tasks_answered'] != 0 else 0,
+                                              stats['max_unlimited_score']),
                      reply_markup=start_kb)
     await state.clear()

@@ -13,10 +13,12 @@ import logging
 async def main():
     await kafka_producer.init_producer()
 
-    scheduler.add_job(send_user_journey, 'interval', minutes=2)
-    scheduler.add_job(send_errors, 'interval', minutes=2)
-    # scheduler.add_job(send_user_journey, 'interval', hours=24)
-    # scheduler.add_job(send_errors, 'interval', minutes=15)
+    if settings.mode == "debug":
+        scheduler.add_job(send_user_journey, 'interval', minutes=2)
+        scheduler.add_job(send_errors, 'interval', minutes=2)
+    else:
+        scheduler.add_job(send_user_journey, 'interval', hours=24)
+        scheduler.add_job(send_errors, 'interval', minutes=15)
     scheduler.start()
 
     bot = Bot(token=settings.bot_token, parse_mode=ParseMode.HTML)

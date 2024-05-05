@@ -9,6 +9,3 @@ class User(Base):
     id: Mapped[int] = mapped_column(Integer, autoincrement=True, primary_key=True)
     telegram_id: Mapped[int] = mapped_column(Integer, unique=True, index=True)
     username: Mapped[str] = mapped_column(String)
-    correct_answers: Mapped[int] = mapped_column(Integer)
-    tasks_answered: Mapped[int] = mapped_column(Integer)
-    max_unlimited_score: Mapped[int] = mapped_column(Integer)

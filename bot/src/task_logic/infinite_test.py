@@ -1,6 +1,7 @@
 from aiogram import types
 from aiogram.utils.formatting import as_list
 from database_requests import get_tasks, get_answers
+from datetime import datetime
 from typing import Dict, List
 from utils import safe_request
 
@@ -18,6 +19,8 @@ async def get_new_tasks(user_id: int):
     tasks_data[user_id] = {}
     tasks_data[user_id]["correct"] = 0
     tasks_data[user_id]["question_num"] = 0
+
+    random.seed(datetime.now().timestamp())
 
     user_tasks[user_id] = await get_tasks(difficulty_min=0.0,
                                           difficulty_max=1.0,

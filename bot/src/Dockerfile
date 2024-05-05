@@ -8,6 +8,7 @@ WORKDIR /app
 RUN pip install -r requirements.txt
 
 ENV PYTHONPATH=/app
+ENV MODE="release"
 ENV DATABASE_HOST="database"
 ENV DATABASE_PORT=8000
 ENV KAFKA_HOST="kafka"

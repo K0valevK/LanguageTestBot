@@ -8,18 +8,16 @@
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
         http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
 
-    <changeSet author="k.kovalev" id="create-user-table">
-        <createTable tableName="user">
-            <column autoIncrement="true" name="id" type="INTEGER">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="user_pkey"/>
-            </column>
+    <changeSet author="k.kovalev" id="create-index-t_id">
+        <createIndex indexName="telegram_id_index" tableName="user">
+            <column name="telegram_id"/>
+        </createIndex>
+    </changeSet>
 
-            <column name="telegram_id" type="INTEGER">
-                <constraints nullable="false" unique="true"/>
-            </column>
-
-            <column name="username" type="VARCHAR" />
-        </createTable>
+    <changeSet author="k.kovalev" id="create-index-user">
+        <createIndex indexName="user_id_index" tableName="statistics">
+            <column name="user_id"/>
+        </createIndex>
     </changeSet>
 
 </databaseChangeLog>

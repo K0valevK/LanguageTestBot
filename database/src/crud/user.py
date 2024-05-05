@@ -37,6 +37,11 @@ async def upd_user(db: AsyncSession, args: UserCreateDBSchema):
     return db_user
 
 
+async def get_user_from_fk(db: AsyncSession, id: int):
+    result = await db.execute(select(UserDBModel).where(UserDBModel.id == id))
+    return result.scalars().one_or_none()
+
+
 async def get_user_by_id(db: AsyncSession, telegram_id: int):
     result = await db.execute(select(UserDBModel).where(UserDBModel.telegram_id == telegram_id))
     return result.scalars().one_or_none()
@@ -45,13 +50,3 @@ async def get_user_by_id(db: AsyncSession, telegram_id: int):
 async def get_user_by_name(db: AsyncSession, username: str):
     result = await db.execute(select(UserDBModel).where(UserDBModel.username == username))
     return result.scalars().one_or_none()
-
-
-async def lb_unlimited_score(db: AsyncSession):
-    result = await db.execute(select(UserDBModel).order_by(desc(UserDBModel.max_unlimited_score)).limit(3))
-    return result.scalars().all()
-
-
-async def lb_correct_ans(db: AsyncSession):
-    result = await db.execute(select(UserDBModel).order_by(desc(UserDBModel.correct_answers)).limit(3))
-    return result.scalars().all()
