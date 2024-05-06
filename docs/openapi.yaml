@@ -1,0 +1,478 @@
+---
+openapi: 3.1.0
+info:
+  title: My FastAPI project
+  version: 0.1.0
+paths:
+  "/task":
+    get:
+      tags:
+      - Tasks
+      summary: Get Tasks
+      operationId: get_tasks_task_get
+      parameters:
+      - name: difficulty_min
+        in: query
+        required: true
+        schema:
+          type: number
+          title: Difficulty Min
+      - name: difficulty_max
+        in: query
+        required: true
+        schema:
+          type: number
+          title: Difficulty Max
+      - name: offset
+        in: query
+        required: true
+        schema:
+          type: integer
+          title: Offset
+      - name: limit
+        in: query
+        required: true
+        schema:
+          type: integer
+          title: Limit
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Task"
+                title: Response Get Tasks Task Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+  "/task/ans/{task_id}":
+    get:
+      tags:
+      - Tasks
+      summary: Get Answers
+      operationId: get_answers_task_ans__task_id__get
+      parameters:
+      - name: task_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Task Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Answer"
+                title: Response Get Answers Task Ans  Task Id  Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+  "/statistics":
+    put:
+      tags:
+      - Statistics
+      summary: Update Statistics
+      operationId: update_statistics_statistics_put
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/StatisticsCreate"
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Statistics"
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+    post:
+      tags:
+      - Statistics
+      summary: Post Statistics
+      operationId: post_statistics_statistics_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/StatisticsCreate"
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Statistics"
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+  "/statistics/{user_id}":
+    get:
+      tags:
+      - Statistics
+      summary: Get Statistics
+      operationId: get_statistics_statistics__user_id__get
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: User Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Statistics"
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+  "/statistics/leaders/tasks":
+    get:
+      tags:
+      - Statistics
+      summary: Get Leaders Tasks
+      operationId: get_leaders_tasks_statistics_leaders_tasks_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  "$ref": "#/components/schemas/Statistics"
+                type: array
+                title: Response Get Leaders Tasks Statistics Leaders Tasks Get
+  "/statistics/leaders/endless":
+    get:
+      tags:
+      - Statistics
+      summary: Get Leaders Endless
+      operationId: get_leaders_endless_statistics_leaders_endless_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  "$ref": "#/components/schemas/Statistics"
+                type: array
+                title: Response Get Leaders Endless Statistics Leaders Endless Get
+  "/user":
+    put:
+      tags:
+      - Users
+      summary: Update User
+      operationId: update_user_user_put
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UserCreate"
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/User"
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+    post:
+      tags:
+      - Users
+      summary: Post User
+      operationId: post_user_user_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UserCreate"
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/User"
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+  "/user/{telegram_id}":
+    get:
+      tags:
+      - Users
+      summary: Get User
+      operationId: get_user_user__telegram_id__get
+      parameters:
+      - name: telegram_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Telegram Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/User"
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+  "/user/id/{id}":
+    get:
+      tags:
+      - Users
+      summary: Get User Id
+      operationId: get_user_id_user_id__id__get
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/User"
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+  "/user/name/{username}":
+    get:
+      tags:
+      - Users
+      summary: Get User Name
+      operationId: get_user_name_user_name__username__get
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Username
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/User"
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+components:
+  schemas:
+    Answer:
+      properties:
+        task_id:
+          type: integer
+          title: Task Id
+        text:
+          type: string
+          title: Text
+        text_pos:
+          type: integer
+          title: Text Pos
+        is_true:
+          type: boolean
+          title: Is True
+        id:
+          type: integer
+          title: Id
+      type: object
+      required:
+      - task_id
+      - text
+      - text_pos
+      - is_true
+      - id
+      title: Answer
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            "$ref": "#/components/schemas/ValidationError"
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    Statistics:
+      properties:
+        user_id:
+          type: integer
+          title: User Id
+        id:
+          type: integer
+          title: Id
+        correct_answers:
+          type: integer
+          title: Correct Answers
+        tasks_answered:
+          type: integer
+          title: Tasks Answered
+        max_unlimited_score:
+          type: integer
+          title: Max Unlimited Score
+      type: object
+      required:
+      - user_id
+      - id
+      - correct_answers
+      - tasks_answered
+      - max_unlimited_score
+      title: Statistics
+    StatisticsCreate:
+      properties:
+        user_id:
+          type: integer
+          title: User Id
+        correct_answers:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Correct Answers
+        tasks_answered:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Tasks Answered
+        max_unlimited_score:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Max Unlimited Score
+      type: object
+      required:
+      - user_id
+      - correct_answers
+      - tasks_answered
+      - max_unlimited_score
+      title: StatisticsCreate
+    Task:
+      properties:
+        type:
+          type: string
+          title: Type
+        text:
+          type: string
+          title: Text
+        difficulty:
+          type: number
+          title: Difficulty
+        id:
+          type: integer
+          title: Id
+      type: object
+      required:
+      - type
+      - text
+      - difficulty
+      - id
+      title: Task
+    User:
+      properties:
+        telegram_id:
+          type: integer
+          title: Telegram Id
+        id:
+          type: integer
+          title: Id
+        username:
+          type: string
+          title: Username
+      type: object
+      required:
+      - telegram_id
+      - id
+      - username
+      title: User
+    UserCreate:
+      properties:
+        telegram_id:
+          type: integer
+          title: Telegram Id
+        username:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Username
+      type: object
+      required:
+      - telegram_id
+      - username
+      title: UserCreate
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
