@@ -1,0 +1,135 @@
+version: "3"
+
+services:
+  postgresql:
+    extends:
+      file: tools/database-dev/docker-compose.yml
+      service: postgresql
+
+  pgadmin:
+    extends:
+      file: tools/database-dev/docker-compose.yml
+      service: pgadmin
+
+  kafka:
+    extends:
+      file: tools/kafka-dev/docker-compose.yml
+      service: kafka
+
+  kafka-ui:
+    container_name: "kafka-ui"
+    image: provectuslabs/kafka-ui
+    restart: unless-stopped
+    depends_on:
+      - kafka
+    environment:
+      KAFKA_CLUSTERS_0_NAME: 'local'
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: 'kafka:29092'
+      KAFKA_CLUSTERS_0_METRICS_PORT: 9997
+      DYNAMIC_CONFIG_ENABLED: 'true'
+    ports:
+      - "8081:8080"
+    networks:
+      - langbot-network
+
+  init-kafka:
+    container_name: "init-kafka"
+    image: confluentinc/cp-kafka:7.6.0
+    depends_on:
+      - kafka
+    networks:
+      - langbot-network
+    entrypoint: [ "/bin/sh", "-c" ]
+    command: |
+      "
+      # blocks until kafka is reachable
+      kafka-topics --bootstrap-server kafka:29092 --list
+      echo -e 'Creating kafka topics'
+      kafka-topics --bootstrap-server kafka:29092 --create --if-not-exists --topic user_journey --replication-factor 1 --partitions 1
+      kafka-topics --bootstrap-server kafka:29092 --create --if-not-exists --topic errors --replication-factor 1 --partitions 1
+      echo -e 'Successfully created the following topics:'
+      kafka-topics --bootstrap-server kafka:29092 --list
+      "
+
+  migrations_tasks:
+    container_name: "migrations_tasks"
+    image: liquibase/liquibase:4.19.0
+    command: --defaultsFile=/app/liquibase.properties update
+    depends_on:
+      postgresql:
+        condition: service_healthy
+    volumes:
+      - ./database/migrations/task_db:/app
+    networks:
+      - langbot-network
+
+  migrations_users:
+    container_name: "migrations_users"
+    image: liquibase/liquibase:4.19.0
+    command: --defaultsFile=/app/liquibase.properties update
+    depends_on:
+      postgresql:
+        condition: service_healthy
+    volumes:
+      - ./database/migrations/statistics_db:/app
+    networks:
+      - langbot-network
+
+  clickhouse:
+    extends:
+      file: tools/clickhouse-dev/docker-compose.yml
+      service: clickhouse
+
+  database:
+    container_name: "database"
+    build:
+      context: .
+      dockerfile: database/src/Dockerfile
+    depends_on:
+      postgresql:
+        condition: service_healthy
+      migrations_tasks:
+        condition: service_completed_successfully
+      migrations_users:
+        condition: service_completed_successfully
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    networks:
+      - langbot-network
+
+  bot:
+    container_name: "bot"
+    build:
+      context: .
+      dockerfile: bot/src/Dockerfile
+    depends_on:
+      database:
+        condition: service_started
+      init-kafka:
+        condition: service_completed_successfully
+    restart: unless-stopped
+    networks:
+      - langbot-network
+
+  logs:
+    container_name: "logs"
+    build:
+      context: .
+      dockerfile: logger_db/src/Dockerfile
+    depends_on:
+      bot:
+        condition: service_started
+      kafka:
+        condition: service_started
+      init-kafka:
+        condition: service_completed_successfully
+      clickhouse:
+        condition: service_started
+    restart: unless-stopped
+    networks:
+      - langbot-network
+
+networks:
+  langbot-network:
+    name: "langbot-network"

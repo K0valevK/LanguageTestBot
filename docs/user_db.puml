@@ -1,0 +1,23 @@
+@startuml
+
+skinparam linetype ortho
+
+entity user {
+    * id: int <<generated>>
+    --
+    * telegram_id: int
+    * username: varchar
+}
+
+entity statistics {
+    * id: int <<generated>>
+    --
+    * user_id: int <<FK>>
+    * correct_answers: int
+    * tasks_answered: int
+    * max_unlimited_score: int
+}
+
+user ||-|{ statistics
+
+@enduml
