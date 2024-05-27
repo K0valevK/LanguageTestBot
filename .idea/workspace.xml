@@ -5,7 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d7c0135b-1d8e-440f-89f0-6f099ac2a9ed" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/tools/clear_logs.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/c4-container.puml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bot/src/logs/log_files/2024-05-06-15-32-errors.tsv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bot/src/logs/log_files/2024-05-06-15-32-user_journey.tsv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bot/src/task_logic/infinite_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/bot/src/task_logic/infinite_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bot/src/task_logic/leveled_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/bot/src/task_logic/leveled_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bot/src/text.py" beforeDir="false" afterPath="$PROJECT_DIR$/bot/src/text.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,20 +48,21 @@
   "keyToString": {
     "Python.bot.executor": "Run",
     "Python.database.executor": "Run",
+    "Python.logs_db.executor": "Run",
     "Python.main (1).executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "/Users/kkovalev/LanguageTestBot/bot/src"
+    "last_opened_file_path": "/Users/kkovalev/LanguageTestBot/logger_db/src"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/logger_db/src" />
       <recent name="$PROJECT_DIR$/bot/src" />
       <recent name="$PROJECT_DIR$/database/migrations/statistics_db" />
       <recent name="$PROJECT_DIR$/database/src" />
       <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/bot" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/database/migrations/task_db" />
@@ -68,6 +76,7 @@
     <configuration name="project" type="CompoundRunConfigurationType">
       <toRun name="bot" type="PythonConfigurationType" />
       <toRun name="database" type="PythonConfigurationType" />
+      <toRun name="logs_db" type="PythonConfigurationType" />
       <method v="2" />
     </configuration>
     <configuration name="bot" type="PythonConfigurationType" factoryName="Python">
@@ -116,8 +125,32 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="logs_db" type="PythonConfigurationType" factoryName="Python">
+      <module name="LanguageTestBot" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.11" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/logger_db" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/logger_db/src/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Compound.project" />
+      <item itemvalue="Python.logs_db" />
       <item itemvalue="Python.database" />
       <item itemvalue="Python.bot" />
     </list>
@@ -144,9 +177,14 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/database/src/crud/user.py</url>
-          <line>46</line>
-          <option name="timeStamp" value="31" />
+          <url>file://$PROJECT_DIR$/logger_db/src/kafka_wrappers/user_journey.py</url>
+          <line>11</line>
+          <option name="timeStamp" value="32" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/logger_db/src/kafka_wrappers/errors.py</url>
+          <line>11</line>
+          <option name="timeStamp" value="33" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

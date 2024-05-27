@@ -47,12 +47,11 @@ async def create_task(user_id: int, task_num: int):
         ans_text.append(user_ans[user_id][task_num][i].text)
     random.shuffle(ans_text)
 
-    kb = types.ReplyKeyboardMarkup(keyboard=[
-        [
-            types.KeyboardButton(text=i) for i in ans_text
-        ],
-        [types.KeyboardButton(text=text.TEST_QUIT)],
-    ], resize_keyboard=True, input_field_placeholder="Ответ")
+    tmp = []
+    for i in ans_text:
+        tmp += [[types.KeyboardButton(text=i)]]
+    tmp += [[types.KeyboardButton(text=text.TEST_QUIT)]]
+    kb = types.ReplyKeyboardMarkup(keyboard=tmp, resize_keyboard=True, input_field_placeholder="Ответ")
 
     task_txt = user_tasks[user_id][task_num].text.split()
     task_txt[user_ans[user_id][task_num][0].text_pos] = "*****"

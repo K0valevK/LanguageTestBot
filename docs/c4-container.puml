@@ -1,0 +1,26 @@
+@startuml
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons
+!include DEVICONS/angular.puml
+!include DEVICONS/postgresql.puml
+!include DEVICONS/python.puml
+!include <cloudinsight/kafka>
+
+Person(user, "Пользователь", "Пользователь бота")
+
+Container(bot, "Телеграм-бот", "Python", $sprite="python")
+Container(database, "База данных", "Python", $sprite="python")
+ContainerDb(user_db, "User Database", "PostgreSQL", $sprite="postgresql")
+ContainerDb(task_db, "Task Database", "PostgreSQL", $sprite="postgresql")
+ContainerQueue(event, "Event queue", "kakfa", "", "kafka")
+ContainerDb(log_db, "Log Database", "Clickhouse")
+
+Rel(user, bot, "Взаимодействие с ботом")
+Rel_L(bot, database, "Запросы заданий/информации о пользователях", "REST")
+Rel(database, user_db, "Read/Write")
+Rel_L(database, task_db, "Read")
+Rel_R(bot, event, "Запись логов", "json")
+Rel(event, log_db, "Write")
+
+@enduml
